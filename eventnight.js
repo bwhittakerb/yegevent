@@ -3,7 +3,7 @@ var cal_events = [{"end": "2016-09-10T15:00:00", "title": "Rogers Place Open Hou
 //Global Variables
 	var eventToday = false;
 
-
+//function if provided date object is equal to the day but ignores time of day
 function isToday (dateToTest) {
 	todaysDate = new Date();
 	return (dateToTest.getFullYear() === todaysDate.getFullYear()) &&
