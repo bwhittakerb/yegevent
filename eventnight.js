@@ -37,7 +37,7 @@ function daysInMonth() {
                     0).getDate();}
 
 //gives nice english names to our date format output
-function dateStringer (dateToFormat) {
+function dateStringer (dateToFormat, includeHour = true) {
 	var monthNames = [
 	"January", "February", "March",
 	"April", "May", "June", "July",
@@ -51,9 +51,12 @@ function dateStringer (dateToFormat) {
 	var monthIndex = dateToFormat.getMonth();
 	var year = dateToFormat.getFullYear();
 
+	console.log(includeHour);
+	if (includeHour === false) {dateToFormat.setHours(0);}
+
 	if (dateToFormat.getHours() > 0) {
 		return(dayNames[dayIndex] + ', ' + monthNames[monthIndex] + ' ' + day + ' at ' + dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} ));
-	}
+		}
 
 	return(dayNames[dayIndex] + ' ' + monthNames[monthIndex] + ' ' + day);
 	}
@@ -88,11 +91,11 @@ function dateStringer (dateToFormat) {
 		document.getElementById('nextEvent').innerHTML = nextEvent();
 
 		//bottom visibility and whatnot
-	if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){
-		if (("standalone" in window.navigator) && !window.navigator.standalone) {
+	if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){ //if the user agent is an iOS device
+		if (("standalone" in window.navigator) && !window.navigator.standalone) { //if browser can do fullscreen but isn't
 				document.getElementById('installInstructions').style.visibility = 'visible';
 				}
-				else if(("standalone" in window.navigator) && window.navigator.standalone) {
+				else if(("standalone" in window.navigator) && window.navigator.standalone) { //hide if in iOS fullscreen mode
 					document.getElementById('installInstructions').style.visibility = 'hidden';
 				}
 	}
@@ -111,6 +114,9 @@ function eventMonthStats() {
 
 function postNoEvent(eventBool) {
 	if (eventBool == false) {
+		var noEventDateText = document.createTextNode(dateStringer(todaysDate,false)+':');
+		document.getElementById('noEventDate').appendChild(noEventDateText);
+		document.getElementById('noEventDate').style.visibility = 'visible';
 		var noEventText = document.createTextNode('No events today');
 		document.getElementById('noEvent').appendChild(noEventText);
 	}

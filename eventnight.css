@@ -23,6 +23,14 @@ position:fixed;
 	visibility: hidden;
 }
 
+h1#noEventDate {
+	visibility: hidden;
+	border-top: 2em;
+	border-bottom: 0em;
+	letter-spacing: .09em;
+	font-size: smaller;
+}
+
 p#wraptext {
 	margin-left: 1em;
 	margin-right: 1em;
@@ -46,8 +54,9 @@ h1#stats {
 	font-size: 12px;
 }
 h1#noEvent {
-	margin-top: 1em;
 	font-size: 33px;
+	line-height: .4em;
+	margin-top: 0em;
 }
 table a:link {
 	color: #666;
