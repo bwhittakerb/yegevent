@@ -87,6 +87,11 @@ function dateStringer (dateToFormat) {
 		//document.getElementById('nextEvent').appendChild(nextEventText);
 		document.getElementById('nextEvent').innerHTML = nextEvent();
 
+		//bottom visibility
+		if (("standalone" in window.navigator) && !window.navigator.standalone) {
+				document.getElementById('installInstructions').style.visibility = 'visible';
+				}
+
 function eventMonthStats() {
 	var totalEvents = 0;
 
