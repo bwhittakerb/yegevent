@@ -88,11 +88,11 @@ function dateStringer (dateToFormat) {
 		document.getElementById('nextEvent').innerHTML = nextEvent();
 
 		//bottom visibility and whatnot
-	if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){
-		if (("standalone" in window.navigator) && !window.navigator.standalone) {
+	if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){ //if the user agent is an iOS device
+		if (("standalone" in window.navigator) && !window.navigator.standalone) { //if browser can do fullscreen but isn't
 				document.getElementById('installInstructions').style.visibility = 'visible';
 				}
-				else if(("standalone" in window.navigator) && window.navigator.standalone) {
+				else if(("standalone" in window.navigator) && window.navigator.standalone) { //hide if in iOS fullscreen mode
 					document.getElementById('installInstructions').style.visibility = 'hidden';
 				}
 	}
