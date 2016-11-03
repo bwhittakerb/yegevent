@@ -5,12 +5,13 @@ h1 {
 	color:#666;
 	font-size:16px;
 	margin-top: 3em;
-	text-shadow: 1px 1px 0px #fff;
+	/*text-shadow: 1px 1px 0px #fff;*/
 }
 h1#stats {
 	font-size: 12px;
 }
 h1#noEvent {
+	margin-top: 1em;
 	font-size: 33px;
 }
 table a:link {
