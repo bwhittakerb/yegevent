@@ -2,6 +2,7 @@ var cal_events = [{"end": "2016-09-10T15:00:00", "title": "Rogers Place Open Hou
 
 //Global Variables
 	var eventToday = false;
+	var todaysDate = new Date();
 
 //function if provided date object is equal to the day but ignores time of day
 function isToday (dateToTest) {
@@ -18,6 +19,10 @@ function isToday2 (dateToTest,dateAgainst) {
 					(dateToTest.getMonth() === dateAgainst.getMonth()) &&
           (dateToTest.getDate() == dateAgainst.getDate());
 	}
+
+function dateDelta(dateVar) {
+	return(dateVar.getDate() - todaysDate.getDate());
+}
 
 function isThisMonth (dateToTest) {
 	todaysDate = new Date()
@@ -56,7 +61,7 @@ function dateStringer (dateToFormat) {
 	// iterate over each element in the array
 	for (var i = 0; i < cal_events.length; i++){
   	// look for the entry with a matching `code` value
-  	var loopDate = new Date(cal_events[i].start);  console.log(loopDate.getFullYear());
+  	var loopDate = new Date(cal_events[i].start);
   	if (isToday(loopDate)){
   		eventToday = true;
   		var t = document.querySelector('#productrow'),
@@ -86,12 +91,11 @@ function eventMonthStats() {
 	var totalEvents = 0;
 
 	for (var i = 0; i < cal_events.length; i++) {
-		var loopDate = new Date(cal_events[i].start);  console.log(loopDate.getFullYear());
+		var loopDate = new Date(cal_events[i].start);
 		if (isThisMonth(loopDate)) {
 			totalEvents++;
 		}
 	}
-	console.log(totalEvents + ' out of ' + daysInMonth());
 	return(totalEvents + ' out of ' + daysInMonth() + ' days have events this month.')
 }
 
@@ -105,21 +109,19 @@ function postNoEvent(eventBool) {
 function nextEvent() {
 	// iterate over each element in the array
 	var nextDate = new Date();
-	var dateIncrementer = 0;
+	var dateIncrementer = 1;
 	matchBool = false;
 
 	while (!matchBool) {
-		dateIncrementer++;
-		nextDate.setDate(nextDate.getDate() + dateIncrementer);
-
 		for (var i = 0; i < cal_events.length; i++){
 			// look for the entry with a matching `code` value
-			var loopDate = new Date(cal_events[i].start);  console.log(loopDate.getFullYear());
+			var loopDate = new Date(cal_events[i].start);
 			
 			if (isToday2(loopDate,nextDate)) {
 			matchBool = true;
-			return('The next event is <em id="nextEventTitle">' + cal_events[i].title + '</em>, ' + (dateIncrementer + 1) + ' days from now.');
+			return('The next event is <em id="nextEventTitle">' + cal_events[i].title + '</em>, ' + (dateDelta(nextDate)) + ' days from now.');
 				}
 			}
+		nextDate.setDate(nextDate.getDate() + dateIncrementer);
 		}
 	}
