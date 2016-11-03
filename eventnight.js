@@ -88,12 +88,14 @@ function dateStringer (dateToFormat) {
 		document.getElementById('nextEvent').innerHTML = nextEvent();
 
 		//bottom visibility and whatnot
+	if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){
 		if (("standalone" in window.navigator) && !window.navigator.standalone) {
 				document.getElementById('installInstructions').style.visibility = 'visible';
 				}
-				else if (("standalone" in window.navigator) && window.navigator.standalone) {
+				else if(("standalone" in window.navigator) && window.navigator.standalone) {
 					document.getElementById('installInstructions').style.visibility = 'hidden';
 				}
+	}
 
 function eventMonthStats() {
 	var totalEvents = 0;
