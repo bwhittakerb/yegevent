@@ -3,6 +3,27 @@
 	/*font-size: larger;*/
 }
 
+#footer {   
+position:fixed;
+	left:0px;
+	bottom:1em;
+	height:6em;
+
+	width:100%;
+
+	text-align: center;
+	text-transform: uppercase;
+	font-family: Helvetica, Arial, sans-serif;
+	color:#666;
+	font-size:10px;
+	/*margin-top: 3em;*/
+}
+
+p#wraptext {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
 h1 {
 	text-align: center;
 	text-transform: uppercase;
