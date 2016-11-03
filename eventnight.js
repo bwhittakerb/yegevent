@@ -96,9 +96,7 @@ function eventMonthStats() {
 }
 
 function postNoEvent(eventBool) {
-	console.log(eventBool)
 	if (eventBool == false) {
-		console.log('this fires')
 		var noEventText = document.createTextNode('No events today');
 		document.getElementById('noEvent').appendChild(noEventText);
 	}
@@ -120,7 +118,7 @@ function nextEvent() {
 			
 			if (isToday2(loopDate,nextDate)) {
 			matchBool = true;
-			return('The next event is <em>' + cal_events[i].title + '</em>, ' + (dateIncrementer + 1) + ' days from now.');
+			return('The next event is <em id="nextEventTitle">' + cal_events[i].title + '</em>, ' + (dateIncrementer + 1) + ' days from now.');
 				}
 			}
 		}
