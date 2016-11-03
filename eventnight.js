@@ -78,8 +78,9 @@ function dateStringer (dateToFormat) {
 		var statsTxt = document.createTextNode(eventMonthStats());
 		document.getElementById('stats').appendChild(statsTxt);
 
-		var nextEventText = document.createTextNode(nextEvent());
-		document.getElementById('nextEvent').appendChild(nextEventText);
+		//var nextEventText = document.createTextNode(nextEvent());
+		//document.getElementById('nextEvent').appendChild(nextEventText);
+		document.getElementById('nextEvent').innerHTML = nextEvent();
 
 function eventMonthStats() {
 	var totalEvents = 0;
@@ -119,7 +120,7 @@ function nextEvent() {
 			
 			if (isToday2(loopDate,nextDate)) {
 			matchBool = true;
-			return('The next event will be ' + (dateIncrementer + 1) + ' days from now.');
+			return('The next event is <em>' + cal_events[i].title + '</em>, ' + (dateIncrementer + 1) + ' days from now.');
 				}
 			}
 		}
