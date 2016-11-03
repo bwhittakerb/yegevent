@@ -31,6 +31,7 @@ function daysInMonth() {
                     todaysDate.getMonth()+1, 
                     0).getDate();}
 
+//gives nice english names to our date format output
 function dateStringer (dateToFormat) {
 	var monthNames = [
 	"January", "February", "March",
