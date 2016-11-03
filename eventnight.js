@@ -91,6 +91,9 @@ function dateStringer (dateToFormat) {
 		if (("standalone" in window.navigator) && !window.navigator.standalone) {
 				document.getElementById('installInstructions').style.visibility = 'visible';
 				}
+				else if (("standalone" in window.navigator) && window.navigator.standalone) {
+					document.getElementById('installInstructions').style.visibility = 'hidden';
+				}
 
 function eventMonthStats() {
 	var totalEvents = 0;
