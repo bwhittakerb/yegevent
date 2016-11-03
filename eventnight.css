@@ -24,6 +24,11 @@ p#wraptext {
 	margin-right: 1em;
 }
 
+a#incoglink {
+	text-decoration: none;
+	color: #222;
+}
+
 h1 {
 	text-align: center;
 	text-transform: uppercase;

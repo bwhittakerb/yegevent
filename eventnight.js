@@ -119,7 +119,7 @@ function nextEvent() {
 			
 			if (isToday2(loopDate,nextDate)) {
 			matchBool = true;
-			return('The next event is <em id="nextEventTitle">' + cal_events[i].title + '</em>, ' + (dateDelta(nextDate)) + ' days from now.');
+			return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' days from now.');
 				}
 			}
 		nextDate.setDate(nextDate.getDate() + dateIncrementer);
