@@ -127,6 +127,7 @@ function nextEvent() {
 	matchBool = false;
 
 	while (!matchBool) {
+		nextDate.setDate(nextDate.getDate() + dateIncrementer);
 		for (var i = 0; i < cal_events.length; i++){
 			// look for the entry with a matching `code` value
 			var loopDate = new Date(cal_events[i].start);
@@ -136,6 +137,6 @@ function nextEvent() {
 			return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' days from now.');
 				}
 			}
-		nextDate.setDate(nextDate.getDate() + dateIncrementer);
+		
 		}
 	}
