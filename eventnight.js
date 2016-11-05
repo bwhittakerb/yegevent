@@ -134,9 +134,17 @@ function nextEvent() {
 			
 			if (isToday2(loopDate,nextDate)) {
 			matchBool = true;
-			return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' days from now.');
+			return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' ' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
 				}
 			}
 		
 		}
 	}
+
+// This function is to return either 'day' or 'days' properly
+function pluralizer(word, number) {
+	if (word === 'day' && number != 1) {
+		return('days');
+	}
+	else {return('day');}
+}
