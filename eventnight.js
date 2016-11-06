@@ -1,10 +1,20 @@
 //Global Variables
-	var eventToday = false;
-	var todaysDate = new Date();
+var eventToday = false;
+
+//allowing for a debug argument
+if (window.location.hash) {
+	//check if hash argument is an int
+	urlArgument = parseInt(window.location.hash.substring(1),10);
+	console.log("urlArgument is: " + urlArgument);
+	if (!isNaN(urlArgument)) {
+		var todaysDate = new Date();
+		todaysDate.setDate(todaysDate.getDate() + urlArgument);
+	}
+} else {var todaysDate = new Date();}
+console.log(todaysDate);
 
 //function if provided date object is equal to the day but ignores time of day
 function isToday (dateToTest) {
-	todaysDate = new Date();
 	return (dateToTest.getFullYear() === todaysDate.getFullYear()) &&
 					(dateToTest.getMonth() === todaysDate.getMonth()) &&
           (dateToTest.getDate() == todaysDate.getDate());
@@ -23,13 +33,11 @@ function dateDelta(dateVar) {
 }
 
 function isThisMonth (dateToTest) {
-	todaysDate = new Date()
 	return (dateToTest.getFullYear() === todaysDate.getFullYear() &&
 					(dateToTest.getMonth() === todaysDate.getMonth()));
 	}
 
 function daysInMonth() {
-	var todaysDate = new Date();
     return new Date(todaysDate.getYear(), 
                     todaysDate.getMonth()+1, 
                     0).getDate();}
@@ -49,7 +57,7 @@ function dateStringer (dateToFormat, includeHour = true) {
 	var monthIndex = dateToFormat.getMonth();
 	var year = dateToFormat.getFullYear();
 
-	console.log(includeHour);
+	console.log("datestringer included hour: " + includeHour);
 	if (includeHour === false) {dateToFormat.setHours(0);}
 
 	if (dateToFormat.getHours() > 0) {
@@ -67,7 +75,7 @@ function dateStringer (dateToFormat, includeHour = true) {
   		eventToday = true;
   		var t = document.querySelector('#productrow'),
   		td = t.content.querySelectorAll("td");
-  		td[0].textContent = cal_events[i].title;
+  		td[0].innerHTML = cal_events[i].title;
   		td[1].textContent = dateStringer(loopDate);
       
       // Clone the new row and insert it into the table
@@ -88,15 +96,15 @@ function dateStringer (dateToFormat, includeHour = true) {
 		//document.getElementById('nextEvent').appendChild(nextEventText);
 		document.getElementById('nextEvent').innerHTML = nextEvent();
 
-		//bottom visibility and whatnot
-	if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){ //if the user agent is an iOS device
-		if (("standalone" in window.navigator) && !window.navigator.standalone) { //if browser can do fullscreen but isn't
-				document.getElementById('installInstructions').style.visibility = 'visible';
-				}
-				else if(("standalone" in window.navigator) && window.navigator.standalone) { //hide if in iOS fullscreen mode
-					document.getElementById('installInstructions').style.visibility = 'hidden';
-				}
-	}
+//bottom visibility and whatnot
+if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){ //if the user agent is an iOS device
+	if (("standalone" in window.navigator) && !window.navigator.standalone) { //if browser can do fullscreen but isn't
+			document.getElementById('installInstructions').style.visibility = 'visible';
+			}
+			else if(("standalone" in window.navigator) && window.navigator.standalone) { //hide if in iOS fullscreen mode
+				document.getElementById('installInstructions').style.visibility = 'hidden';
+			}
+}
 
 function eventMonthStats() {
 	var totalEvents = 0;
@@ -122,7 +130,10 @@ function postNoEvent(eventBool) {
 
 function nextEvent() {
 	// iterate over each element in the array
-	var nextDate = new Date();
+	//this clones the currently set today's date
+	var nextDate = new Date(+todaysDate);
+	console.log("todaysDate here is: " + todaysDate);
+	console.log("nextDate variable is currently: " + nextDate);
 	var dateIncrementer = 1;
 	matchBool = false;
 
@@ -133,8 +144,8 @@ function nextEvent() {
 			var loopDate = new Date(cal_events[i].start);
 			
 			if (isToday2(loopDate,nextDate)) {
-			matchBool = true;
-			return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' ' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
+				matchBool = true;
+				return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' ' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
 				}
 			}
 		
