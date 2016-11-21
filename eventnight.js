@@ -145,8 +145,6 @@ function nextEvent() {
 	// iterate over each element in the array
 	//this clones the currently set today's date
 	var nextDate = new Date(+todaysDate);
-	console.log("todaysDate here is: " + todaysDate);
-	console.log("nextDate variable is currently: " + nextDate);
 	var dateIncrementer = 1;
 	matchBool = false;
 
@@ -158,7 +156,7 @@ function nextEvent() {
 			
 			if (isToday2(loopDate,nextDate)) {
 				matchBool = true;
-				return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' ' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
+				return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + '&nbsp;' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
 				}
 			}
 		

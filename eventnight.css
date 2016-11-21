@@ -31,6 +31,10 @@ h1#noEventDate {
 	font-size: smaller;
 }
 
+h1#nextEvent {
+	margin-top: 1em;
+}
+
 p#wraptext {
 	margin-left: 1em;
 	margin-right: 1em;
@@ -43,6 +47,7 @@ a#incoglink {
 
 td.record {
 	font-weight: bold;
+	padding: 30px;
 }
 
 td.timeinfo {
@@ -56,7 +61,7 @@ h1 {
 	color:#666;
 	font-size:16px;
 	margin-top: 3em;
-	/*text-shadow: 1px 1px 0px #fff;*/
+
 }
 h1#stats {
 	font-size: 12px;
@@ -86,11 +91,10 @@ table {
 	font-family: Helvetica, Arial, sans-serif;
 	color:#666;
 	font-size:22px;
-	text-shadow: 1px 1px 0px #fff;
 	background:#eaebec;
 	margin-left: auto;
 	margin-right: auto;
-	/*border:#ccc 0px solid;*/
+	margin-top: .7em;
 
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
@@ -129,7 +133,7 @@ table tr:first-child th:last-child {
 }*/
 table tr {
 	text-align: center;
-	padding-left:20px;
+	padding-left:12px;
 }
 /*table td:first-child {
 	text-align: left;
@@ -137,14 +141,7 @@ table tr {
 	border-left: 0;
 }*/
 table td {
-	padding:18px;
-	border-top: 1px solid #ffffff;
-	border-bottom:1px solid #e0e0e0;
-	border-left: 1px solid #e0e0e0;
-
-	background: #fafafa;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
-	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+	padding:14px;
 }
 table tr.even td {
 	background: #f6f6f6;
