@@ -41,10 +41,18 @@ a#incoglink {
 	color: #222;
 }
 
+td.record {
+	font-weight: bold;
+}
+
+td.timeinfo {
+	font-size: smaller;
+}
+
 h1 {
 	text-align: center;
 	text-transform: uppercase;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color:#666;
 	font-size:16px;
 	margin-top: 3em;
