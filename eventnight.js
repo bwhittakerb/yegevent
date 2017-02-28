@@ -28,7 +28,12 @@ function isToday2 (dateToTest,dateAgainst) {
 	}
 
 function dateDelta(dateVar) {
-	return(dateVar.getDate() - todaysDate.getDate());
+	var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+	var firstDate = new Date(2008,01,12);
+	var secondDate = new Date(2008,01,22);
+
+	var diffDays = Math.round(Math.abs((todaysDate.getTime() - dateVar.getTime())/(oneDay)));
+	return(diffDays);
 }
 
 function isThisMonth (dateToTest) {
