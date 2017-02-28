@@ -98,8 +98,8 @@ for (var i = 0; i < cal_events.length; i++){
 		var clone = document.importNode(t.content, true);
 		tb[0].appendChild(clone);
 
-		var txt = document.createTextNode("there's an event tonight:");
-		document.getElementById('opener').appendChild(txt);
+		var txt = 'there\'s an event tonight:';
+		document.getElementById('opener').innerText = txt;
 		}
 
 	}
