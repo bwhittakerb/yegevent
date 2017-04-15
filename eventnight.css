@@ -52,6 +52,36 @@ td.record {
 
 td.timeinfo {
 	font-size: smaller;
+	white-space: nowrap;
+}
+
+td.logocell img {
+	height: 30%;
+}
+#producttable td.logocell:empty {
+	visibility: hidden;
+	border-collapse: all;
+	padding: 0px;
+	margin: 0px;
+}
+
+#producttable td {
+	padding:10px;
+}
+
+table#producttable:empty {
+	background: white;
+}
+
+.eventcell dt {
+	font-weight: bold;
+	font-size: larger;
+}
+
+.eventcell dd {
+	margin-left:0px;
+	margin-top: .5em;
+	font-size: 70%;
 }
 
 h1 {
@@ -95,6 +125,9 @@ table {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: .7em;
+	empty-cells: hide;
+	border-collapse: separate;
+	width: 100%;
 
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
@@ -142,7 +175,7 @@ table tr {
 	border-left: 0;
 }*/
 table td {
-	padding:14px;
+	/*padding:14px;*/
 }
 table tr.even td {
 	background: #f6f6f6;

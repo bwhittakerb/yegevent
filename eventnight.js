@@ -70,10 +70,10 @@ function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 	//add additional time information if it's available in the dataset
 	if (dateToFormat.getHours() > 0) {
 		if (includeEnd) {
-			stringConstructor = stringConstructor + '\n' + dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'}) + 
-			' to ' + includeEnd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'});
+			stringConstructor = dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'}) + 
+			' &ndash; ' + includeEnd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'});
 		}
-		else {stringConstructor = stringConstructor + ' at ' + dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'});}
+		else {stringConstructor = dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'});}
 		}
 
 	return(stringConstructor);
@@ -88,10 +88,26 @@ for (var i = 0; i < cal_events.length; i++){
 	var loopDateEnd = new Date(cal_events[i].end);
 	if (isToday(loopDate)){
 		eventToday = true;
+		/* 
 		var t = document.querySelector('#productrow'),
 		td = t.content.querySelectorAll("td");
-		td[0].innerHTML = cal_events[i].title;
+		td[0].innerHTML = eventLogoInjector(cal_events[i].title);
 		td[1].innerText = dateStringer(loopDate,null,loopDateEnd);
+	  
+	  // Clone the new row and insert it into the table
+		var tb = document.getElementsByTagName("tbody");
+		var clone = document.importNode(t.content, true);
+		tb[0].appendChild(clone);
+
+		var txt = 'there\'s an event tonight:';
+		document.getElementById('opener').innerText = txt;
+		}
+		*/
+		var t = document.querySelector('#eventtemplate'),
+		td = t.content.querySelectorAll("td");
+		td[0].innerHTML = eventLogoInjector(cal_events[i].title);
+		td[1].childNodes[1].querySelector("dt").innerHTML = cal_events[i].title;
+		td[1].childNodes[1].querySelector("dd").innerHTML = dateStringer(loopDate,null,loopDateEnd);
 	  
 	  // Clone the new row and insert it into the table
 		var tb = document.getElementsByTagName("tbody");
@@ -141,6 +157,8 @@ function postNoEvent(eventBool) {
 		var noEventDateText = document.createTextNode(dateStringer(todaysDate,false)+':');
 		document.getElementById('noEventDate').appendChild(noEventDateText);
 		document.getElementById('noEventDate').style.visibility = 'visible';
+		//this makes the event table completely invisible
+		document.getElementById('producttable').style.background = 'white';
 		var noEventText = document.createTextNode('No events today');
 		document.getElementById('noEvent').appendChild(noEventText);
 	}
@@ -161,7 +179,7 @@ function nextEvent() {
 			
 			if (isToday2(loopDate,nextDate)) {
 				matchBool = true;
-				return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + '&nbsp;' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
+				return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>,' + pluralizer2(dateDelta(nextDate))); //(dateDelta(nextDate)) + '&nbsp;' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
 				}
 			}
 		
@@ -175,3 +193,21 @@ function pluralizer(word, number) {
 	}
 	else {return('day');}
 }
+
+function pluralizer2(daysAway) {
+	if (daysAway === 1) {
+		return(' tomorrow.');
+	}
+	else {return (' ' + daysAway + '&nbsp;' + 'days from now.');}
+}
+
+// To determine if an oilers logo needs to be injected
+function eventLogoInjector(eventsTitle) {
+	var oilRegex = /oilers/i;
+	if (oilRegex.test(eventsTitle)) {
+		return('<img src=\"logos/Logo_Edmonton_Oilers.svg\" />');
+	}
+	return null;
+}
+
+
