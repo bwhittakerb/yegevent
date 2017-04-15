@@ -52,6 +52,7 @@ td.record {
 
 td.timeinfo {
 	font-size: smaller;
+	white-space: nowrap;
 }
 
 h1 {

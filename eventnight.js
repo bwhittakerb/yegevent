@@ -90,7 +90,7 @@ for (var i = 0; i < cal_events.length; i++){
 		eventToday = true;
 		var t = document.querySelector('#productrow'),
 		td = t.content.querySelectorAll("td");
-		td[0].innerHTML = cal_events[i].title;
+		td[0].innerHTML = eventLogoInjector(cal_events[i].title);
 		td[1].innerText = dateStringer(loopDate,null,loopDateEnd);
 	  
 	  // Clone the new row and insert it into the table
@@ -175,3 +175,14 @@ function pluralizer(word, number) {
 	}
 	else {return('day');}
 }
+
+// To determine if an oilers logo needs to be injected
+function eventLogoInjector(eventsTitle) {
+	var oilRegex = /oilers/i;
+	if (oilRegex.test(eventsTitle)) {
+		return('<img src=\"logos/Logo_Edmonton_Oilers.svg\" />' + '<br />' + eventsTitle);
+	}
+	else {return(eventsTitle);}
+}
+
+
