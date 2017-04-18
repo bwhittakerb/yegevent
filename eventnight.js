@@ -84,8 +84,14 @@ function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 // iterate over each element in the array
 for (var i = 0; i < cal_events.length; i++){
 	// look for the entry with a matching `code` value
-	var loopDate = new Date(cal_events[i].start);
-	var loopDateEnd = new Date(cal_events[i].end);
+	//grab browser's current locale's offset:
+	var currentOffsetString = getTimeZoneOffsetString();
+	var loopDate = new Date(cal_events[i].start+currentOffsetString);
+	//this condition is to keep loopDateEnd null if there is no end date in the JSON data
+	if (cal_events[i].end) {
+		var loopDateEnd = new Date(cal_events[i].end+currentOffsetString);
+	}
+	else {var loopDateEnd = new Date(cal_events[i].end)}
 	if (isToday(loopDate)){
 		eventToday = true;
 		/* 
@@ -211,3 +217,12 @@ function eventLogoInjector(eventsTitle) {
 }
 
 
+function getTimeZoneOffsetString() {
+	var currentOffset = (new Date().getTimeZoneOffset())/-.6;
+	var timeZoneOffsetString = currentOffset.toString();
+	// to pad to 4 digits
+	if (timeZoneOffsetString.length() < 4) {
+		timeZoneOffsetString = '0'+timeZoneOffsetString;
+	}
+	return(timeZoneOffsetString);
+}
