@@ -11,7 +11,6 @@ if (window.location.hash) {
 		todaysDate.setDate(todaysDate.getDate() + urlArgument);
 	}
 } else {var todaysDate = new Date();}
-console.log(todaysDate);
 
 //function if provided date object is equal to the day but ignores time of day
 function isToday (dateToTest) {
@@ -29,7 +28,12 @@ function isToday2 (dateToTest,dateAgainst) {
 	}
 
 function dateDelta(dateVar) {
-	return(dateVar.getDate() - todaysDate.getDate());
+	var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+	var firstDate = new Date(2008,01,12);
+	var secondDate = new Date(2008,01,22);
+
+	var diffDays = Math.round(Math.abs((todaysDate.getTime() - dateVar.getTime())/(oneDay)));
+	return(diffDays);
 }
 
 function isThisMonth (dateToTest) {
@@ -43,7 +47,7 @@ function daysInMonth() {
                     0).getDate();}
 
 //gives nice english names to our date format output
-function dateStringer (dateToFormat, includeHour = true) {
+function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 	var monthNames = [
 	"January", "February", "March",
 	"April", "May", "June", "July",
@@ -56,45 +60,75 @@ function dateStringer (dateToFormat, includeHour = true) {
 	var day = dateToFormat.getDate();
 	var monthIndex = dateToFormat.getMonth();
 	var year = dateToFormat.getFullYear();
+	var stringConstructor;
 
-	console.log("datestringer included hour: " + includeHour);
 	if (includeHour === false) {dateToFormat.setHours(0);}
 
+	//start initial stub of string for date info
+	stringConstructor = dayNames[dayIndex] + ', ' + monthNames[monthIndex] + ' ' + day;
+
+	//add additional time information if it's available in the dataset
 	if (dateToFormat.getHours() > 0) {
-		return(dayNames[dayIndex] + ', ' + monthNames[monthIndex] + ' ' + day + ' at ' + dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'} ));
+		if (includeEnd) {
+			stringConstructor = dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'}) + 
+			' &ndash; ' + includeEnd.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'});
+		}
+		else {stringConstructor = dateToFormat.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'});}
 		}
 
-	return(dayNames[dayIndex] + ' ' + monthNames[monthIndex] + ' ' + day);
+	return(stringConstructor);
 	}
 
-	// iterate over each element in the array
-	for (var i = 0; i < cal_events.length; i++){
-  	// look for the entry with a matching `code` value
-  	var loopDate = new Date(cal_events[i].start);
-  	if (isToday(loopDate)){
-  		eventToday = true;
-  		var t = document.querySelector('#productrow'),
-  		td = t.content.querySelectorAll("td");
-  		td[0].innerHTML = cal_events[i].title;
-  		td[1].textContent = dateStringer(loopDate);
-      
-      // Clone the new row and insert it into the table
-  		var tb = document.getElementsByTagName("tbody");
-  		var clone = document.importNode(t.content, true);
-  		tb[0].appendChild(clone);
-  	
-  		var txt = document.createTextNode("there's an event tonight:");
-  		document.getElementById('opener').appendChild(txt);
-  		}
+
+//MAIN PROGRAM KICKOFF
+// iterate over each element in the array
+for (var i = 0; i < cal_events.length; i++){
+	// look for the entry with a matching `code` value
+	var loopDate = new Date(cal_events[i].start);
+	var loopDateEnd = new Date(cal_events[i].end);
+	if (isToday(loopDate)){
+		eventToday = true;
+		/* 
+		var t = document.querySelector('#productrow'),
+		td = t.content.querySelectorAll("td");
+		td[0].innerHTML = eventLogoInjector(cal_events[i].title);
+		td[1].innerText = dateStringer(loopDate,null,loopDateEnd);
+	  
+	  // Clone the new row and insert it into the table
+		var tb = document.getElementsByTagName("tbody");
+		var clone = document.importNode(t.content, true);
+		tb[0].appendChild(clone);
+
+		var txt = 'there\'s an event tonight:';
+		document.getElementById('opener').innerText = txt;
+		}
+		*/
+		var t = document.querySelector('#eventtemplate'),
+		td = t.content.querySelectorAll("td");
+		td[0].innerHTML = eventLogoInjector(cal_events[i].title);
+		td[1].childNodes[1].querySelector("dt").innerHTML = cal_events[i].title;
+		td[1].childNodes[1].querySelector("dd").innerHTML = dateStringer(loopDate,null,loopDateEnd);
+	  
+	  // Clone the new row and insert it into the table
+		var tb = document.getElementsByTagName("tbody");
+		var clone = document.importNode(t.content, true);
+		tb[0].appendChild(clone);
+
+		var txt = 'there\'s an event tonight:';
+		document.getElementById('opener').innerText = txt;
+		}
 
 	}
-		postNoEvent(eventToday);
-		var statsTxt = document.createTextNode(eventMonthStats());
-		document.getElementById('stats').appendChild(statsTxt);
 
-		//var nextEventText = document.createTextNode(nextEvent());
-		//document.getElementById('nextEvent').appendChild(nextEventText);
-		document.getElementById('nextEvent').innerHTML = nextEvent();
+//Test for event
+postNoEvent(eventToday);
+
+//post event stats
+var statsTxt = document.createTextNode(eventMonthStats());
+document.getElementById('stats').appendChild(statsTxt);
+
+//post upcoming event
+document.getElementById('nextEvent').innerHTML = nextEvent();
 
 //bottom visibility and whatnot
 if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream){ //if the user agent is an iOS device
@@ -123,6 +157,8 @@ function postNoEvent(eventBool) {
 		var noEventDateText = document.createTextNode(dateStringer(todaysDate,false)+':');
 		document.getElementById('noEventDate').appendChild(noEventDateText);
 		document.getElementById('noEventDate').style.visibility = 'visible';
+		//this makes the event table completely invisible
+		document.getElementById('producttable').style.background = 'white';
 		var noEventText = document.createTextNode('No events today');
 		document.getElementById('noEvent').appendChild(noEventText);
 	}
@@ -132,8 +168,6 @@ function nextEvent() {
 	// iterate over each element in the array
 	//this clones the currently set today's date
 	var nextDate = new Date(+todaysDate);
-	console.log("todaysDate here is: " + todaysDate);
-	console.log("nextDate variable is currently: " + nextDate);
 	var dateIncrementer = 1;
 	matchBool = false;
 
@@ -145,7 +179,7 @@ function nextEvent() {
 			
 			if (isToday2(loopDate,nextDate)) {
 				matchBool = true;
-				return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>, ' + (dateDelta(nextDate)) + ' ' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
+				return('The next event is <em id="nextEventTitle"><a href="' + cal_events[i].url + '" id="incoglink">' + cal_events[i].title + '</a></em>,' + pluralizer2(dateDelta(nextDate))); //(dateDelta(nextDate)) + '&nbsp;' + pluralizer('day',dateDelta(nextDate)) + ' from now.');
 				}
 			}
 		
@@ -159,3 +193,21 @@ function pluralizer(word, number) {
 	}
 	else {return('day');}
 }
+
+function pluralizer2(daysAway) {
+	if (daysAway === 1) {
+		return(' tomorrow.');
+	}
+	else {return (' ' + daysAway + '&nbsp;' + 'days from now.');}
+}
+
+// To determine if an oilers logo needs to be injected
+function eventLogoInjector(eventsTitle) {
+	var oilRegex = /oilers/i;
+	if (oilRegex.test(eventsTitle)) {
+		return('<img src=\"logos/Logo_Edmonton_Oilers.svg\" />');
+	}
+	return null;
+}
+
+

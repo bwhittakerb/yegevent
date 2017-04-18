@@ -1,3 +1,5 @@
+
+
 #nextEventTitle {
 	color: #222;
 	/*font-size: larger;*/
@@ -31,6 +33,10 @@ h1#noEventDate {
 	font-size: smaller;
 }
 
+h1#nextEvent {
+	margin-top: 1em;
+}
+
 p#wraptext {
 	margin-left: 1em;
 	margin-right: 1em;
@@ -41,14 +47,53 @@ a#incoglink {
 	color: #222;
 }
 
+td.record {
+	font-weight: bold;
+	padding: 30px;
+}
+
+td.timeinfo {
+	font-size: smaller;
+	white-space: nowrap;
+}
+
+td.logocell img {
+	height: 30%;
+}
+#producttable td.logocell:empty {
+	visibility: hidden;
+	border-collapse: all;
+	padding: 0px;
+	margin: 0px;
+}
+
+#producttable td {
+	padding:10px;
+}
+
+table#producttable:empty {
+	background: white;
+}
+
+.eventcell dt {
+	font-weight: bold;
+	font-size: larger;
+}
+
+.eventcell dd {
+	margin-left:0px;
+	margin-top: .5em;
+	font-size: 70%;
+}
+
 h1 {
 	text-align: center;
 	text-transform: uppercase;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color:#666;
 	font-size:16px;
 	margin-top: 3em;
-	/*text-shadow: 1px 1px 0px #fff;*/
+
 }
 h1#stats {
 	font-size: 12px;
@@ -78,11 +123,13 @@ table {
 	font-family: Helvetica, Arial, sans-serif;
 	color:#666;
 	font-size:22px;
-	text-shadow: 1px 1px 0px #fff;
 	background:#eaebec;
 	margin-left: auto;
 	margin-right: auto;
-	/*border:#ccc 0px solid;*/
+	margin-top: .7em;
+	empty-cells: hide;
+	border-collapse: separate;
+	width: 100%;
 
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
@@ -91,6 +138,9 @@ table {
 	-moz-box-shadow: 0 1px 2px #d1d1d1;
 	/*-webkit-box-shadow: 0 1px 2px #d1d1d1;*/
 	/*box-shadow: 0 1px 2px #d1d1d1;*/
+}
+table#producttable {
+	max-width: 950px;
 }
 table thead {
 	font-weight: bold;
@@ -121,7 +171,8 @@ table tr:first-child th:last-child {
 }*/
 table tr {
 	text-align: center;
-	padding-left:20px;
+	padding-left:12px;
+	border-top: 12px solid black;
 }
 /*table td:first-child {
 	text-align: left;
@@ -129,14 +180,7 @@ table tr {
 	border-left: 0;
 }*/
 table td {
-	padding:18px;
-	border-top: 1px solid #ffffff;
-	border-bottom:1px solid #e0e0e0;
-	border-left: 1px solid #e0e0e0;
-
-	background: #fafafa;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
-	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+	/*padding:14px;*/
 }
 table tr.even td {
 	background: #f6f6f6;
@@ -146,6 +190,10 @@ table tr.even td {
 table tr:last-child td {
 	border-bottom:0;
 }
+table tr:first-child {
+	border-top: 0;
+}
+
 table tr:last-child td:first-child {
 	-moz-border-radius-bottomleft:3px;
 	-webkit-border-bottom-left-radius:3px;
@@ -160,4 +208,15 @@ table tr:hover td {
 	background: #f2f2f2;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
 	background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);	
+}
+
+dl {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+@media (max-width: 320px) {
+	#producttable td.logocell {
+		padding: 5px;
+	}
 }
