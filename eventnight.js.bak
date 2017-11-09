@@ -61,10 +61,6 @@ function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 	var monthIndex = dateToFormat.getMonth();
 	var year = dateToFormat.getFullYear();
 	var stringConstructor;
-	
-	//this hack sets the MST time zone offset. it's ugly
-	//dateToFormat.setHours(dateToFormat.getHours()+7);
-	//includeEnd.setHours(includeEnd.getHours()+7);
 
 	if (includeHour === false) {dateToFormat.setHours(0);}
 
@@ -83,18 +79,19 @@ function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 	return(stringConstructor);
 	}
 
-//required to parse incoming date object as MST or MDT
-function parseISOLocal(s) {
-  var b = s.split(/\D/);
-  return new Date(b[0], b[1]-1, b[2], b[3], b[4], b[5]);
-}
 
 //MAIN PROGRAM KICKOFF
 // iterate over each element in the array
 for (var i = 0; i < cal_events.length; i++){
 	// look for the entry with a matching `code` value
-	var loopDate = parseISOLocal(cal_events[i].start);
-	var loopDateEnd = parseISOLocal(cal_events[i].end);
+	//grab browser's current locale's offset:
+	var currentOffsetString = getTimeZoneOffsetString();
+	var loopDate = new Date(cal_events[i].start+currentOffsetString);
+	//this condition is to keep loopDateEnd null if there is no end date in the JSON data
+	if (cal_events[i].end) {
+		var loopDateEnd = new Date(cal_events[i].end+currentOffsetString);
+	}
+	else {var loopDateEnd = new Date(cal_events[i].end)}
 	if (isToday(loopDate)){
 		eventToday = true;
 		/* 
@@ -219,4 +216,13 @@ function eventLogoInjector(eventsTitle) {
 	return null;
 }
 
-
+//returns a nice string to put to the end of an iso formatted date
+function getTimeZoneOffsetString() {
+	var currentOffset = (new Date().getTimeZoneOffset())/-.6;
+	var timeZoneOffsetString = currentOffset.toString();
+	// to pad to 4 digits
+	if (timeZoneOffsetString.length() < 4) {
+		timeZoneOffsetString = '0'+timeZoneOffsetString;
+	}
+	return(timeZoneOffsetString);
+}
