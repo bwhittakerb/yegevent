@@ -61,6 +61,10 @@ function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 	var monthIndex = dateToFormat.getMonth();
 	var year = dateToFormat.getFullYear();
 	var stringConstructor;
+	
+	//this hack sets the MST time zone offset. it's ugly
+	dateToFormat.setHours(dateToFormat.getHours()+7);
+	includeEnd.setHours(includeEnd.getHours()+7);
 
 	if (includeHour === false) {dateToFormat.setHours(0);}
 
