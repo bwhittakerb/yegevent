@@ -3,6 +3,12 @@ My learning project web app for event night status
 
 Made in Javascript with data scraped from www.rogersplace.com/events. Currently the JSON data is refreshed nightly via a python script which scrapes the page.
 
+### Reference Image
+The mobile display should display something like this.
+
+<img src="screenshots/IMG_0758.PNG" width="400" alt="shown with an oilers game day which uses lightweight, fast loading .svg vector images to display logos to prevent slow loading">
+Shown with an oilers game day which uses lightweight, fast loading .svg vector images to display logos to prevent slow loading.
+
 ### Scrape Refresh Code
 ```python
 #!/usr/bin/env python
