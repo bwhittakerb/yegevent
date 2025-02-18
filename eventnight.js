@@ -63,8 +63,8 @@ function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 	var stringConstructor;
 	
 	//this hack sets the MST time zone offset. it's ugly
-	dateToFormat.setHours(dateToFormat.getHours()+7);
-	includeEnd.setHours(includeEnd.getHours()+7);
+	//dateToFormat.setHours(dateToFormat.getHours()+7);
+	//includeEnd.setHours(includeEnd.getHours()+7);
 
 	if (includeHour === false) {dateToFormat.setHours(0);}
 
@@ -83,13 +83,18 @@ function dateStringer (dateToFormat, includeHour = true, includeEnd = false) {
 	return(stringConstructor);
 	}
 
+//required to parse incoming date object as MST or MDT
+function parseISOLocal(s) {
+  var b = s.split(/\D/);
+  return new Date(b[0], b[1]-1, b[2], b[3], b[4], b[5]);
+}
 
 //MAIN PROGRAM KICKOFF
 // iterate over each element in the array
 for (var i = 0; i < cal_events.length; i++){
 	// look for the entry with a matching `code` value
-	var loopDate = new Date(cal_events[i].start);
-	var loopDateEnd = new Date(cal_events[i].end);
+	var loopDate = parseISOLocal(cal_events[i].start);
+	var loopDateEnd = parseISOLocal(cal_events[i].end);
 	if (isToday(loopDate)){
 		eventToday = true;
 		/* 
