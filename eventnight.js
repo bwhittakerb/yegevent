@@ -134,7 +134,7 @@ for (var i = 0; i < cal_events.length; i++) {
 			td = t.content.querySelectorAll("td");
 		td[0].innerHTML = eventLogoInjector(cal_events[i].title);
 		td[1].childNodes[1].querySelector("dt").innerHTML = cal_events[i].title;
-		td[1].childNodes[1].querySelector("dd").innerHTML = dateRangeStringer([cal_events[i].start, cal_events[i].end]);
+		td[1].childNodes[1].querySelector("dd").innerHTML = `<strong class="TimeValue">${dateRangeStringer([cal_events[i].start, cal_events[i].end])}</strong>`;
 
 		// Clone the new row and insert it into the table
 		var tb = document.getElementsByTagName("tbody");
