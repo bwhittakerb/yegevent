@@ -3,6 +3,8 @@
 	--link-colour: #222;
 	--table-background: #eaebec;
 	--primary-header-colour: #222;
+	--capsule-bgcolour: #afafaf;
+	--capsule-fgcolour: #ffffff;
 	--page-fonts: system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -11,6 +13,8 @@
 		--link-colour: #a0a0a0;
 		--table-background: #2f2f2f;
 		--primary-header-colour: #a0a0a0;
+		--capsule-bgcolour: #797979;
+		--capsule-fgcolour: #cfcfcf;
 	}
 }
 
@@ -72,6 +76,7 @@ td.record {
 td.timeinfo {
 	font-size: smaller;
 	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
 }
 
 td.logocell img {
@@ -157,7 +162,7 @@ table {
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	border-radius:1em;
 
 	/* -moz-box-shadow: 0 1px 2px #d1d1d1; */
 	/*-webkit-box-shadow: 0 1px 2px #d1d1d1;*/
@@ -248,4 +253,14 @@ dl {
 	#producttable td.logocell {
 		padding: 5px;
 	}
+}
+
+.eventcell strong{
+	font-family: ui-rounded;
+	font-weight: 600;
+	color: var(--capsule-fgcolour);
+	background: var(--capsule-bgcolour);
+	border-radius: .5em;
+	padding: .2em .5em;
+	margin-left: .5em;
 }
