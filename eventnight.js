@@ -140,7 +140,6 @@ for (var i = 0; i < cal_events.length; i++) {
 				const imgElement = Object.assign(document.createElement("img"), {
 					src: logoPath,
 					alt: `${teamname} logo`,
-					"aria-label": "aria text"
 				});
 				clone.querySelector("header picture").appendChild(imgElement)
 			});
@@ -191,10 +190,9 @@ function eventMonthStats() {
 
 function postNoEvent(eventBool) {
 	if (eventBool == false) {
-		var noEventDateText = document.createTextNode(dateStringer(todaysDate, false) + ':');
+		const noEventDateText = document.createTextNode(dateStringer(todaysDate, false) + ':');
 		document.getElementById('noEventDate').appendChild(noEventDateText);
 		document.getElementById('noEventDate').style.visibility = 'visible';
-		// var noEventText = document.createTextNode('No events today.');
 		document.getElementById('noEvent').innerText = 'No events today.';
 	}
 }
