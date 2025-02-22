@@ -130,18 +130,28 @@ for (var i = 0; i < cal_events.length; i++) {
 	if (isToday(loopDate)) {
 		eventToday = true;
 
-		var t = document.querySelector('#eventtemplate'),
-			td = t.content.querySelectorAll("td");
-		td[0].innerHTML = eventLogoInjector(cal_events[i].title);
-		td[1].childNodes[1].querySelector("dt").innerHTML = cal_events[i].title;
-		td[1].childNodes[1].querySelector("dd").innerHTML = `<strong class="TimeValue">${dateRangeStringer([cal_events[i].start, cal_events[i].end])}</strong>`;
+		const template = document.getElementById("eventarticle");
+		const clone = template.content.cloneNode(true);
 
-		// Clone the new row and insert it into the table
-		var tb = document.getElementsByTagName("tbody");
-		var clone = document.importNode(t.content, true);
-		tb[0].appendChild(clone);
+		// checks event name for loops and populates logos
+		if (eventLogos = eventLogoPopulator(cal_events[i].title)) {
+			eventLogos.forEach(team => {
+				const [teamname, logoPath] = Object.entries(team)[0]
+				const imgElement = Object.assign(document.createElement("img"), {
+					src: logoPath,
+					alt: `${teamname} logo`,
+					"aria-label": "aria text"
+				});
+				clone.querySelector("header picture").appendChild(imgElement)
+			});
+		}
+		clone.querySelector("header h2").innerText = cal_events[i].title;
+		clone.querySelector("p.event-time").innerHTML = `<strong class="TimeValue">${dateRangeStringer([cal_events[i].start, cal_events[i].end])}</strong>`;
 
-		var txt = 'there\'s an event tonight:';
+		const eventarticles = document.getElementById("eventlist");
+		eventarticles.appendChild(clone);
+
+		var txt = 'There\'s an event tonight:';
 		document.getElementById('opener').innerText = txt;
 	}
 
@@ -184,10 +194,8 @@ function postNoEvent(eventBool) {
 		var noEventDateText = document.createTextNode(dateStringer(todaysDate, false) + ':');
 		document.getElementById('noEventDate').appendChild(noEventDateText);
 		document.getElementById('noEventDate').style.visibility = 'visible';
-		//this makes the event table completely invisible
-		document.getElementById('producttable').style.background = 'white';
-		var noEventText = document.createTextNode('No events today');
-		document.getElementById('noEvent').appendChild(noEventText);
+		// var noEventText = document.createTextNode('No events today.');
+		document.getElementById('noEvent').innerText = 'No events today.';
 	}
 }
 
@@ -235,6 +243,65 @@ function eventLogoInjector(eventsTitle) {
 		return ('<img src=\"logos/Logo_Edmonton_Oilers.svg\" />');
 	}
 	return null;
+}
+
+function eventLogoPopulator(eventsTitle) {
+	var logoList = [];
+
+	const oilRegex = /oilers/i;
+
+	if (oilRegex.test(eventsTitle)) {
+		logoList.push({"Oilers" : "logos/Logo_Edmonton_Oilers.svg"});
+	} else {return null;}
+
+	const matchList = {
+		"Ducks": "logos/Anaheim_Ducks_logo_2024.svg",
+		"Bruins": "logos/Boston_Bruins.svg",
+		"Sabres": "logos/Buffalo_Sabres_Logo.svg",
+		"Flames": "logos/Calgary_Flames_logo.svg",
+		"Hurricanes": "logos/Carolina_Hurricanes.svg",
+		"Blackhawks": "logos/Chicago_Blackhawks_logo.svg",
+		"Avalanche": "logos/Colorado_Avalanche_logo.svg",
+		"Blue Jackets": "logos/Columbus_Blue_Jackets_logo.svg",
+		"Stars": "logos/Dallas_Stars_logo_(2013).svg",
+		"Red Wings": "logos/Detroit_Red_Wings_logo.svg",
+		"Panthers": "logos/Florida_Panthers_2016_logo.svg",
+		"Rangers": "logos/Logo_New_York_Islanders.svg",
+		"Kings": "logos/Los_Angeles_Kings_2024_Logo.svg",
+		"Wild": "logos/Minnesota_Wild.svg",
+		"Canadiens": "logos/Montreal_Canadiens.svg",
+		"Predators": "logos/Nashville_Predators_Logo_(2011).svg",
+		"Devils": "logos/New_Jersey_Devils_logo.svg",
+		"Islanders": "logos/New_York_Rangers.svg",
+		"Senators": "logos/Ottawa_Senators_2020-2021_logo.svg",
+		"Flyers": "logos/Philadelphia_Flyers.svg",
+		"Penguins": "logos/Pittsburgh_Penguins_logo_(2016).svg",
+		"Sharks": "logos/SanJoseSharksLogo.svg",
+		"Kraken": "logos/Seattle_Kraken_official_logo.svg",
+		"Blues": "logos/St._Louis_Blues_logo.svg",
+		"Lightning": "logos/Tampa_Bay_Lightning_2011.svg",
+		"Maple Leafs": "logos/Toronto_Maple_Leafs_2016_logo.svg",
+		"Utah": "logos/Utah_Hockey_Club_2024-25_Logo.svg",
+		"Canucks": "logos/Vancouver_Canucks_logo.svg",
+		"Golden Knights": "logos/Vegas_Golden_Knights_logo.svg",
+		"Capitals": "logos/Washington_Capitals.svg",
+		"Jets": "logos/Winnipeg_Jets_Logo_2011.svg"
+	}
+
+	let pattern = "\\b(" + Object.keys(matchList).join("|") + ")\\b";
+	const regex = new RegExp(pattern, "g");
+
+	let match;
+	while ((match = regex.exec(eventsTitle)) !== null) {
+		const matchedWord = match[0];
+		if (matchList[matchedWord]) {
+			logoList.push({[matchedWord] : matchList[matchedWord]});
+		}
+
+	}
+
+	return logoList;
+
 }
 
 
