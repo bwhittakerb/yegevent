@@ -14,39 +14,33 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/yegevent180.png">
 
 </head>
-<title>Is it an Event Night? (work in progress)</title>
+<title>Is it an Event Night?</title>
 <link rel="stylesheet" type="text/css" href="eventnight.css" />
 
 <body>
-<!-- Includes code from: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template -->
+	
+<p id="noEventDate"></p>
 
-<h1 id="opener"></h1>
+<article id="eventlist">
+	<h1 id="opener"></h1>
+</article>
 
-<table id="producttable">
-
-  <tbody>
-  </tbody>
-</table>
-
-<!-- This template is to display event data if an event occurs today -->
-<template id="eventtemplate">
-	<tr>
-		<td class="logocell"></td>
-		<td class="eventcell">
-			<dl>
-				<dt></dt>
-				<dd></dd>
-			</dl>
-		</td>
-	</tr>
+<template id="eventarticle">
+	<article class="event">
+		<header>
+			<picture></picture>
+			<h2></h2>
+		</header>
+		<p class="event-time"></p>
+	</article>
 </template>
-<h1 id="noEventDate"></h1>
-<h1 id="noEvent"></h1>
-<h1 id="nextEvent"></h1>
-<h1 id="stats"></h1>
 
+<p id="noEvent"></p>
 
-
+<section class="stats">
+	<p id="nextEvent"></p>
+	<p id="stats"></p>
+</section>
 
 
 <div id="footer"><p id="wraptext"><small>Kitbashed by Brendan Brown (brendan at stickingpoint.net)&middot;<a href="https://www.facebook.com/brendanwbrown">(f)</a>&middot;<a href="https://ca.linkedin.com/in/brendan-brown-5651b152">(li)</a>&middot;<a href="https://github.com/bwhittakerb">(github)</a></small><br /><span id="installInstructions">Hit the <strong>'share'</strong> below and choose <strong>'add to home screen'</strong> to install this app.</span></p>
